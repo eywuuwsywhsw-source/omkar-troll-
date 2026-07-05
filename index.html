@@ -17,7 +17,7 @@
             padding: 20px;
             overflow-x: hidden;
             position: relative;
-            cursor: pointer; /* indicate clickable */
+            cursor: pointer;
         }
 
         /* FLOATING TROLL ELEMENTS */
@@ -123,7 +123,8 @@
             pointer-events: none;
         }
 
-        .soundcloud-player {
+        /* HIDDEN YOUTUBE PLAYER */
+        .youtube-player {
             position: fixed;
             bottom: -9999px;
             left: -9999px;
@@ -153,9 +154,10 @@
 <div class="float-item">🥥</div>
 <div class="float-item">🚽</div>
 
-<!-- SOUNDCLOUD PLAYER (hidden, will be started by click) -->
-<iframe id="scPlayer" class="soundcloud-player" 
-        src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/lucky-953353572/appadi-podu&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&visual=false&start_track=0&buying=false&liking=false&download=false&sharing=false&show_artwork=false">
+<!-- YOUTUBE PLAYER (hidden, will be started by click) -->
+<iframe id="ytPlayer" class="youtube-player"
+        src="https://www.youtube.com/embed/1-CA5NaaLCA?autoplay=0&loop=1&playlist=1-CA5NaaLCA&mute=1&controls=0&disablekb=1&modestbranding=1&rel=0&showinfo=0"
+        allow="autoplay; encrypted-media">
 </iframe>
 
 <!-- OVERLAY TO START MUSIC -->
@@ -165,7 +167,7 @@
     <span style="font-size:1.2rem; opacity:0.6;">(After this, music stays on)</span>
 </div>
 
-<!-- MAIN CARD (same as before) -->
+<!-- MAIN CARD -->
 <div class="troll-card">
     <div class="header">
         <h1>🤡 Omkar <span style="font-size:1.8rem;">·</span> <span style="font-size:1.6rem; color: #b3bce6;">Vella Pro</span></h1>
@@ -224,11 +226,11 @@
 
 <script>
     const overlay = document.getElementById('music-overlay');
-    const iframe = document.getElementById('scPlayer');
+    const iframe = document.getElementById('ytPlayer');
 
     function startMusic() {
-        // Reload iframe with auto_play=true to start sound
-        const url = iframe.src.replace('auto_play=false', 'auto_play=true');
+        // Reload iframe with autoplay=1 to start music
+        const url = iframe.src.replace('autoplay=0', 'autoplay=1');
         iframe.src = url;
         // Hide overlay
         overlay.classList.add('hidden');
