@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Omkar — The Legend of Vella Pro Coder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { background: linear-gradient(145deg, #0b0e1a 0%, #1a1f2f 100%); min-height: 100vh; display: flex; justify-content: center; align-items: center; font-family: 'Segoe UI', Roboto, system-ui, sans-serif; padding: 20px; }
+        .troll-card { max-width: 880px; width: 100%; background: rgba(22,28,46,0.85); backdrop-filter: blur(12px); border-radius: 56px 56px 48px 48px; padding: 30px 30px 40px; box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,215,0,0.15); border: 1px solid rgba(255,215,0,0.2); animation: floatGlow 4s ease-in-out infinite; position:relative; }
+        @keyframes floatGlow { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
+        .header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 2px dashed rgba(255,215,0,0.3); padding-bottom: 18px; }
+        .header h1 { font-size: 2.4rem; font-weight: 800; background: linear-gradient(135deg, #f7e05e, #f9b042); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 0 20px rgba(255,200,50,0.3); }
+        .header .badge { background: #2a2f45; padding: 8px 20px; border-radius: 60px; color: #f0d878; font-weight: 600; border: 1px solid #f0d87855; }
+        .address-pill { background: rgba(0,0,0,0.5); border-radius: 60px; padding: 12px 24px; margin-bottom: 28px; display: inline-flex; align-items: center; gap: 12px; border-left: 4px solid #f7c948; color: #cdd4f0; font-size: 0.95rem; }
+        .address-pill i { color: #f7c948; }
+        .address-pill strong { color: #fff8e0; }
+        .media-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 28px 0 30px; }
+        .media-box { background: #131a28; border-radius: 32px; overflow: hidden; border: 1px solid #2c3450; box-shadow: 0 8px 24px rgba(0,0,0,0.6); transition: transform 0.2s ease; }
+        .media-box:hover { transform: scale(1.01); border-color: #f7c94866; }
+        .media-box .label { background: #0f1422; padding: 10px 16px; font-weight: 600; color: #b3bce6; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #28304a; }
+        .media-box .label i { color: #f7c948; }
+        .media-box img { width: 100%; height: auto; display: block; aspect-ratio: 16 / 10; object-fit: cover; background: #0a0e18; }
+        .media-box iframe { width: 100%; aspect-ratio: 16 / 10; border: none; display: block; background: #0a0e18; }
+        .meme-section { background: rgba(0,0,0,0.35); border-radius: 40px; padding: 22px 24px; margin: 18px 0 28px; border: 1px solid #2d3655; }
+        .meme-section h3 { color: #f0d878; font-size: 1.5rem; display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+        .meme-grid { display: flex; flex-wrap: wrap; gap: 14px; }
+        .meme-tag { background: #1f2742; padding: 10px 22px; border-radius: 60px; color: #e8eefc; font-weight: 500; border: 1px solid #3c4770; transition: all 0.15s ease; display: inline-flex; align-items: center; gap: 10px; }
+        .meme-tag i { color: #f7c948; }
+        .meme-tag:hover { background: #2e3a62; border-color: #f7c948aa; transform: translateY(-3px); }
+        .telegram-btn { display: inline-flex; align-items: center; gap: 14px; background: linear-gradient(135deg, #2a8cff, #1a6bc4); padding: 16px 36px; border-radius: 60px; font-weight: 700; font-size: 1.2rem; color: #fff; text-decoration: none; box-shadow: 0 10px 30px rgba(42,140,255,0.35); transition: all 0.2s ease; border: 1px solid #5aa3ff; }
+        .telegram-btn:hover { transform: scale(1.04) translateY(-3px); box-shadow: 0 16px 48px rgba(42,140,255,0.5); }
+        .btn-wrap { display: flex; justify-content: center; margin: 18px 0 8px; }
+        .footer-quote { text-align: center; margin-top: 28px; color: #8b97c7; font-style: italic; border-top: 1px solid #293252; padding-top: 24px; font-size: 0.95rem; }
+        .footer-quote i { color: #f7c948; margin: 0 6px; }
+        .music-toggle { position: fixed; bottom: 24px; right: 24px; background: rgba(22,28,46,0.9); border: 2px solid #f7c948; color: #f7c948; border-radius: 60px; padding: 14px 22px; font-size: 1.2rem; font-weight: 600; cursor: pointer; backdrop-filter: blur(8px); box-shadow: 0 8px 30px rgba(0,0,0,0.6); transition: all 0.2s ease; display: flex; align-items: center; gap: 12px; z-index: 999; }
+        .music-toggle:hover { transform: scale(1.05); background: #2a2f45; box-shadow: 0 0 30px rgba(247,201,72,0.3); }
+        .music-toggle i { font-size: 1.4rem; }
+        @media (max-width:650px) { .media-grid { grid-template-columns:1fr; } .header h1 { font-size:1.8rem; } .telegram-btn { padding:14px 24px; font-size:1rem; width:100%; justify-content:center; } .music-toggle { bottom:16px; right:16px; padding:12px 16px; font-size:1rem; } }
+    </style>
+</head>
+<body>
+
+<!-- YOUTUBE BACKGROUND MUSIC – UNMUTED (FULL SOUND) -->
+<iframe id="bgVideo" 
+        src="https://www.youtube.com/embed/1-CA5NaaLCA?autoplay=1&loop=1&playlist=1-CA5NaaLCA&mute=0&controls=0&disablekb=1&modestbranding=1&rel=0&showinfo=0" 
+        style="position:fixed; top:0; left:0; width:0; height:0; border:none; opacity:0; pointer-events:none;" 
+        allow="autoplay; encrypted-media" 
+        allowfullscreen>
+</iframe>
+
+<!-- MUSIC TOGGLE (ON by default) -->
+<button class="music-toggle" id="musicToggle">
+    <i class="fas fa-volume-up" id="musicIcon"></i>
+    <span id="musicLabel">On</span>
+</button>
+
+<div class="troll-card">
+    <div class="header">
+        <h1>🤡 Omkar <span style="font-size:1.8rem;">·</span> <span style="font-size:1.6rem; color: #b3bce6;">Vella Pro</span></h1>
+        <span class="badge"><i class="fas fa-code" style="margin-right: 8px;"></i> self‑proclaimed</span>
+    </div>
+    <div class="address-pill">
+        <i class="fas fa-map-pin"></i>
+        <span><strong>📍 Omkar S/O Suresh</strong> · MIG 2/30, Gandhi Nagar, Gokul Road, Hubli-Dharwad, Karnataka 580030</span>
+    </div>
+    <div class="media-grid">
+        <div class="media-box">
+            <div class="label"><i class="fas fa-image"></i> 📸 Omkar in the wild</div>
+            <img src="https://i.imgur.com/XiREoL1.jpeg" alt="Omkar photo" />
+        </div>
+        <div class="media-box">
+            <div class="label"><i class="fas fa-video"></i> 🎬 Omkar in action</div>
+            <iframe src="https://go.screenpal.com/player/cOih2JnUbFH" allowfullscreen></iframe>
+        </div>
+    </div>
+    <div class="meme-section">
+        <h3><i class="fas fa-pepper-hot"></i> Kerala troll memes <span style="font-size:1.2rem; font-weight:400; color:#9aa9d9;">— for the "pro coder"</span></h3>
+        <div class="meme-grid">
+            <span class="meme-tag"><i class="fas fa-laugh-squint"></i> #KeralaProCoder</span>
+            <span class="meme-tag"><i class="fas fa-egg"></i> #AppamCode</span>
+            <span class="meme-tag"><i class="fas fa-coconut"></i> #CoconutDebug</span>
+            <span class="meme-tag"><i class="fas fa-umbrella-beach"></i> #VellaVibes</span>
+            <span class="meme-tag"><i class="fas fa-code"></i> #ReactKerala</span>
+            <span class="meme-tag"><i class="fas fa-train"></i> #VandeBharatCoder</span>
+            <span class="meme-tag"><i class="fas fa-mosque"></i> #MalabarStack</span>
+            <span class="meme-tag"><i class="fas fa-dragon"></i> #UlluProMax</span>
+        </div>
+        <div style="margin-top: 16px; color: #b3bce6; border-left: 3px solid #f7c948; padding-left: 18px;">
+            <i class="fas fa-quote-left" style="color: #f7c948; margin-right: 6px;"></i>
+            "He thinks he's a pro coder, but his stack is just <strong style="color:#f0d878;">chai + overconfidence</strong>."
+        </div>
+    </div>
+    <div class="btn-wrap">
+        <a href="https://web.telegram.org/k/#@omkar1130" target="_blank" class="telegram-btn">
+            <i class="fab fa-telegram-plane"></i> Direct to Omkar's Telegram
+        </a>
+    </div>
+    <div style="display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; margin: 16px 0 6px;">
+        <span style="background: #1a2238; padding: 6px 20px; border-radius: 40px; color: #a0b3d9; border: 1px solid #2d3a5a;">
+            <i class="fas fa-bug" style="color:#f7c948;"></i> 99% bugs – 1% code
+        </span>
+        <span style="background: #1a2238; padding: 6px 20px; border-radius: 40px; color: #a0b3d9; border: 1px solid #2d3a5a;">
+            <i class="fas fa-brain" style="color:#f7c948;"></i> Stack: HTML + CSS + "trust me bro"
+        </span>
+    </div>
+    <div class="footer-quote">
+        <i class="fas fa-skull"></i> This page is purely for entertainment · no coders were harmed <i class="fas fa-skull"></i>
+        <br />
+        <span style="font-size:0.8rem; color:#5f6f99;">📍 Hubli · Dharwad · Karnataka · 580030</span>
+    </div>
+</div>
+
+<script>
+    const iframe = document.getElementById('bgVideo');
+    const toggleBtn = document.getElementById('musicToggle');
+    const icon = document.getElementById('musicIcon');
+    const label = document.getElementById('musicLabel');
+    let isPlaying = true; // starts unmuted
+
+    toggleBtn.addEventListener('click', function() {
+        if (isPlaying) {
+            // Mute
+            iframe.src = iframe.src.replace('mute=0', 'mute=1');
+            icon.className = 'fas fa-music';
+            label.textContent = 'Muted';
+            isPlaying = false;
+        } else {
+            // Unmute
+            iframe.src = iframe.src.replace('mute=1', 'mute=0');
+            icon.className = 'fas fa-volume-up';
+            label.textContent = 'On';
+            isPlaying = true;
+        }
+    });
+</script>
+
+</body>
+</html>
