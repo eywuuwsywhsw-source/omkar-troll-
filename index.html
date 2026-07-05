@@ -17,6 +17,7 @@
             padding: 20px;
             overflow-x: hidden;
             position: relative;
+            cursor: pointer; /* indicate clickable */
         }
 
         /* FLOATING TROLL ELEMENTS */
@@ -87,7 +88,41 @@
         .footer-quote { text-align: center; margin-top: 28px; color: #8b97c7; font-style: italic; border-top: 1px solid #293252; padding-top: 24px; font-size: 0.95rem; }
         .footer-quote i { color: #f7c948; margin: 0 6px; }
 
-        /* HIDDEN SOUNDCLOUD PLAYER */
+        /* CLICK OVERLAY (to start music) */
+        #music-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            color: #f7c948;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            font-weight: 700;
+            z-index: 10000;
+            backdrop-filter: blur(4px);
+            text-align: center;
+            padding: 20px;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: opacity 0.8s ease;
+            flex-direction: column;
+            gap: 20px;
+        }
+        #music-overlay i {
+            font-size: 4rem;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.7; }
+        }
+        #music-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
         .soundcloud-player {
             position: fixed;
             bottom: -9999px;
@@ -104,12 +139,13 @@
             .header h1 { font-size:1.8rem; }
             .telegram-btn { padding:14px 24px; font-size:1rem; width:100%; justify-content:center; }
             .float-item { font-size: 2.5rem; }
+            #music-overlay { font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
-<!-- FLOATING COCONUT & POTTY (TROLL ELEMENTS) -->
+<!-- FLOATING TROLLS -->
 <div class="float-item">🥥</div>
 <div class="float-item">🚽</div>
 <div class="float-item">🥥</div>
@@ -117,13 +153,19 @@
 <div class="float-item">🥥</div>
 <div class="float-item">🚽</div>
 
-<!-- SOUNDCLOUD PLAYER (HIDDEN, AUTOPLAY) -->
-<iframe class="soundcloud-player" 
-        src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/lucky-953353572/appadi-podu&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&visual=false&start_track=0&buying=false&liking=false&download=false&sharing=false&show_artwork=false"
-        allow="autoplay">
+<!-- SOUNDCLOUD PLAYER (hidden, will be started by click) -->
+<iframe id="scPlayer" class="soundcloud-player" 
+        src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/lucky-953353572/appadi-podu&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&visual=false&start_track=0&buying=false&liking=false&download=false&sharing=false&show_artwork=false">
 </iframe>
 
-<!-- MAIN CARD -->
+<!-- OVERLAY TO START MUSIC -->
+<div id="music-overlay">
+    <i class="fas fa-music"></i>
+    <span>Click anywhere to start the troll music 🥥🚽</span>
+    <span style="font-size:1.2rem; opacity:0.6;">(After this, music stays on)</span>
+</div>
+
+<!-- MAIN CARD (same as before) -->
 <div class="troll-card">
     <div class="header">
         <h1>🤡 Omkar <span style="font-size:1.8rem;">·</span> <span style="font-size:1.6rem; color: #b3bce6;">Vella Pro</span></h1>
@@ -179,6 +221,26 @@
         <span style="font-size:0.8rem; color:#5f6f99;">📍 Hubli · Dharwad · Karnataka · 580030</span>
     </div>
 </div>
+
+<script>
+    const overlay = document.getElementById('music-overlay');
+    const iframe = document.getElementById('scPlayer');
+
+    function startMusic() {
+        // Reload iframe with auto_play=true to start sound
+        const url = iframe.src.replace('auto_play=false', 'auto_play=true');
+        iframe.src = url;
+        // Hide overlay
+        overlay.classList.add('hidden');
+        // Remove event listeners
+        document.removeEventListener('click', startMusic);
+        document.removeEventListener('touchstart', startMusic);
+    }
+
+    // Add click/touch listeners to start music
+    document.addEventListener('click', startMusic);
+    document.addEventListener('touchstart', startMusic);
+</script>
 
 </body>
 </html>
