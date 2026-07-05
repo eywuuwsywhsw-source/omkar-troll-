@@ -7,9 +7,61 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
-        body { background: linear-gradient(145deg, #0b0e1a 0%, #1a1f2f 100%); min-height: 100vh; display: flex; justify-content: center; align-items: center; font-family: 'Segoe UI', Roboto, system-ui, sans-serif; padding: 20px; }
-        .troll-card { max-width: 880px; width: 100%; background: rgba(22,28,46,0.85); backdrop-filter: blur(12px); border-radius: 56px 56px 48px 48px; padding: 30px 30px 40px; box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,215,0,0.15); border: 1px solid rgba(255,215,0,0.2); animation: floatGlow 4s ease-in-out infinite; position:relative; }
-        @keyframes floatGlow { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
+        body {
+            background: linear-gradient(145deg, #0b0e1a 0%, #1a1f2f 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* FLOATING TROLL ELEMENTS */
+        .float-item {
+            position: fixed;
+            font-size: 3.5rem;
+            opacity: 0.7;
+            pointer-events: none;
+            z-index: 999;
+            animation: floatAround 12s infinite ease-in-out alternate;
+        }
+        .float-item:nth-child(1) { top: 10%; left: 5%; animation-duration: 14s; }
+        .float-item:nth-child(2) { top: 20%; right: 8%; animation-duration: 11s; animation-delay: 1s; }
+        .float-item:nth-child(3) { bottom: 15%; left: 12%; animation-duration: 16s; animation-delay: 2s; }
+        .float-item:nth-child(4) { bottom: 30%; right: 5%; animation-duration: 13s; animation-delay: 0.5s; }
+        .float-item:nth-child(5) { top: 50%; left: 2%; animation-duration: 18s; animation-delay: 3s; }
+        .float-item:nth-child(6) { top: 60%; right: 2%; animation-duration: 15s; animation-delay: 1.5s; }
+
+        @keyframes floatAround {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            25% { transform: translate(60px, -40px) rotate(20deg) scale(1.1); }
+            50% { transform: translate(-30px, 50px) rotate(-15deg) scale(0.9); }
+            75% { transform: translate(40px, -20px) rotate(10deg) scale(1.05); }
+            100% { transform: translate(-50px, 30px) rotate(-5deg) scale(1); }
+        }
+
+        /* MAIN CARD */
+        .troll-card {
+            max-width: 880px;
+            width: 100%;
+            background: rgba(22,28,46,0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 56px 56px 48px 48px;
+            padding: 30px 30px 40px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,215,0,0.15);
+            border: 1px solid rgba(255,215,0,0.2);
+            animation: floatGlow 4s ease-in-out infinite;
+            position: relative;
+            z-index: 10;
+        }
+        @keyframes floatGlow {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
         .header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 2px dashed rgba(255,215,0,0.3); padding-bottom: 18px; }
         .header h1 { font-size: 2.4rem; font-weight: 800; background: linear-gradient(135deg, #f7e05e, #f9b042); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 0 20px rgba(255,200,50,0.3); }
         .header .badge { background: #2a2f45; padding: 8px 20px; border-radius: 60px; color: #f0d878; font-weight: 600; border: 1px solid #f0d87855; }
@@ -34,28 +86,44 @@
         .btn-wrap { display: flex; justify-content: center; margin: 18px 0 8px; }
         .footer-quote { text-align: center; margin-top: 28px; color: #8b97c7; font-style: italic; border-top: 1px solid #293252; padding-top: 24px; font-size: 0.95rem; }
         .footer-quote i { color: #f7c948; margin: 0 6px; }
-        .music-toggle { position: fixed; bottom: 24px; right: 24px; background: rgba(22,28,46,0.9); border: 2px solid #f7c948; color: #f7c948; border-radius: 60px; padding: 14px 22px; font-size: 1.2rem; font-weight: 600; cursor: pointer; backdrop-filter: blur(8px); box-shadow: 0 8px 30px rgba(0,0,0,0.6); transition: all 0.2s ease; display: flex; align-items: center; gap: 12px; z-index: 999; }
-        .music-toggle:hover { transform: scale(1.05); background: #2a2f45; box-shadow: 0 0 30px rgba(247,201,72,0.3); }
-        .music-toggle i { font-size: 1.4rem; }
-        @media (max-width:650px) { .media-grid { grid-template-columns:1fr; } .header h1 { font-size:1.8rem; } .telegram-btn { padding:14px 24px; font-size:1rem; width:100%; justify-content:center; } .music-toggle { bottom:16px; right:16px; padding:12px 16px; font-size:1rem; } }
+
+        /* HIDDEN SOUNDCLOUD PLAYER */
+        .soundcloud-player {
+            position: fixed;
+            bottom: -9999px;
+            left: -9999px;
+            width: 0;
+            height: 0;
+            border: none;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @media (max-width:650px) {
+            .media-grid { grid-template-columns:1fr; }
+            .header h1 { font-size:1.8rem; }
+            .telegram-btn { padding:14px 24px; font-size:1rem; width:100%; justify-content:center; }
+            .float-item { font-size: 2.5rem; }
+        }
     </style>
 </head>
 <body>
 
-<!-- YOUTUBE BACKGROUND MUSIC – UNMUTED (FULL SOUND) -->
-<iframe id="bgVideo" 
-        src="https://www.youtube.com/embed/1-CA5NaaLCA?autoplay=1&loop=1&playlist=1-CA5NaaLCA&mute=0&controls=0&disablekb=1&modestbranding=1&rel=0&showinfo=0" 
-        style="position:fixed; top:0; left:0; width:0; height:0; border:none; opacity:0; pointer-events:none;" 
-        allow="autoplay; encrypted-media" 
-        allowfullscreen>
+<!-- FLOATING COCONUT & POTTY (TROLL ELEMENTS) -->
+<div class="float-item">🥥</div>
+<div class="float-item">🚽</div>
+<div class="float-item">🥥</div>
+<div class="float-item">🚽</div>
+<div class="float-item">🥥</div>
+<div class="float-item">🚽</div>
+
+<!-- SOUNDCLOUD PLAYER (HIDDEN, AUTOPLAY) -->
+<iframe class="soundcloud-player" 
+        src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/lucky-953353572/appadi-podu&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&visual=false&start_track=0&buying=false&liking=false&download=false&sharing=false&show_artwork=false"
+        allow="autoplay">
 </iframe>
 
-<!-- MUSIC TOGGLE (ON by default) -->
-<button class="music-toggle" id="musicToggle">
-    <i class="fas fa-volume-up" id="musicIcon"></i>
-    <span id="musicLabel">On</span>
-</button>
-
+<!-- MAIN CARD -->
 <div class="troll-card">
     <div class="header">
         <h1>🤡 Omkar <span style="font-size:1.8rem;">·</span> <span style="font-size:1.6rem; color: #b3bce6;">Vella Pro</span></h1>
@@ -111,30 +179,6 @@
         <span style="font-size:0.8rem; color:#5f6f99;">📍 Hubli · Dharwad · Karnataka · 580030</span>
     </div>
 </div>
-
-<script>
-    const iframe = document.getElementById('bgVideo');
-    const toggleBtn = document.getElementById('musicToggle');
-    const icon = document.getElementById('musicIcon');
-    const label = document.getElementById('musicLabel');
-    let isPlaying = true; // starts unmuted
-
-    toggleBtn.addEventListener('click', function() {
-        if (isPlaying) {
-            // Mute
-            iframe.src = iframe.src.replace('mute=0', 'mute=1');
-            icon.className = 'fas fa-music';
-            label.textContent = 'Muted';
-            isPlaying = false;
-        } else {
-            // Unmute
-            iframe.src = iframe.src.replace('mute=1', 'mute=0');
-            icon.className = 'fas fa-volume-up';
-            label.textContent = 'On';
-            isPlaying = true;
-        }
-    });
-</script>
 
 </body>
 </html>
